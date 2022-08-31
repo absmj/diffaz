@@ -9,6 +9,15 @@ app.use("/", router)
 
 const jsonBody = bodyParser.json();
 
+router.route('/').get(async (req, res) => {
+    try{
+        Response(res, await require("./router/index").index(), "Database file loaded", 200)
+    }
+    catch(e){
+        Response(res, [], `Error occured: ${e.message}`, 500)
+    }
+})
+
 router.route("/login").post(jsonBody, async (req, res) => {
     const {username, password} = req.body;
     try{
